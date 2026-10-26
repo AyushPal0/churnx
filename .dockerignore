@@ -1,0 +1,10 @@
+.venv
+node_modules
+dist
+.git
+.env
+runtime
+reports
+data
+src
+public

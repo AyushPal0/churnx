@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: churnx-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.lock
+    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.13
+      - key: MODEL_PATH
+        value: models/churnx_pipeline.joblib
+      - key: DATABASE_PATH
+        value: /tmp/churnx/predictions.db
+      - key: ALLOWED_ORIGINS
+        sync: false

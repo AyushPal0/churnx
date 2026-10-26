@@ -1,0 +1,8 @@
+{
+  "requests": 100,
+  "success_rate": 1.0,
+  "mean_ms": 15.03,
+  "p95_ms": 18.83,
+  "max_ms": 20.56,
+  "scope": "Sequential local FastAPI TestClient requests, excluding model startup and network transit"
+}

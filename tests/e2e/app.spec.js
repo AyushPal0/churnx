@@ -1,0 +1,78 @@
+import { test, expect } from '@playwright/test';
+
+test('live dashboard, customer filters, predictions, history and model metadata', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('/');
+  await expect(page.getByText('Live inference', { exact: true })).toBeVisible();
+  await expect(page.getByText('7,043', { exact: true })).toBeVisible();
+  await page.screenshot({ path: 'reports/overview-desktop.png', fullPage: true });
+  await page.getByRole('button', { name: 'Customers', exact: true }).click();
+  await expect(page.getByText('7,043 matching customers')).toBeVisible();
+  await page.getByRole('button', { name: 'Low', exact: true }).click();
+  await expect(page.locator('tbody .risk-badge').first()).toHaveText('Low');
+  await page.getByRole('button', { name: 'All', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Search customers' }).fill('7590-VHVEG');
+  await expect(page.locator('tbody tr')).toHaveCount(1);
+  await expect(page.getByText('7590-VHVEG', { exact: true })).toBeVisible();
+  await page.getByRole('textbox', { name: 'Search customers' }).fill('does-not-exist');
+  await expect(page.getByText('No customer records to display.')).toBeVisible();
+  await page.getByRole('button', { name: 'Predictions', exact: true }).click();
+  await page.getByLabel('Tenure (months)').fill('12');
+  await page.getByLabel('Monthly charges ($)').fill('89.50');
+  await page.getByLabel('Total charges ($)').fill('1074');
+  const responsePromise = page.waitForResponse((response) => response.url().endsWith('/api/predict') && response.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Analyze churn risk', exact: true }).click();
+  const response = await responsePromise;
+  expect(response.ok()).toBeTruthy();
+  const prediction = await response.json();
+  await expect(page.locator('.score-ring strong')).toHaveText(`${Math.round(prediction.churn_probability * 10000) / 100}%`);
+  await expect(page.locator('.result-card > h3')).toHaveText(prediction.prediction ? 'Likely to churn' : 'Likely to stay');
+  await expect(page.locator('.history-card tbody tr').first()).toContainText(prediction.model_version);
+  await page.screenshot({ path: 'reports/prediction-desktop.png', fullPage: true });
+  await page.reload();
+  await expect(page.getByText('Live inference', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Predictions', exact: true }).click();
+  await expect(page.locator('.history-card tbody tr').first()).toContainText(prediction.model_version);
+  await page.getByRole('combobox', { name: 'Internet service', exact: true }).selectOption('No');
+  await expect(page.getByRole('combobox', { name: 'Tech support', exact: true })).toHaveValue('No internet service');
+  await expect(page.getByRole('combobox', { name: 'Tech support', exact: true })).toBeDisabled();
+  await page.getByRole('combobox', { name: 'Phone service', exact: true }).selectOption('No');
+  await expect(page.getByRole('combobox', { name: 'Multiple lines' })).toHaveValue('No phone service');
+  await page.getByRole('button', { name: 'Insights', exact: true }).click();
+  await expect(page.locator('.chart-card')).toHaveCount(6);
+  await page.getByRole('button', { name: 'Model', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'GradientBoostingClassifier', exact: true })).toBeVisible();
+  await expect(page.getByText('0.844', { exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('service failure and prediction errors remain visible', async ({ page }) => {
+  await page.route('**/api/**', (route) => route.fulfill({ status: 503, contentType: 'application/json', body: '{"detail":"Unavailable"}' }));
+  await page.goto('/');
+  await expect(page.getByRole('alert')).toBeVisible();
+  await expect(page.getByText('Offline', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Predictions', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Analyze churn risk', exact: true })).toBeDisabled();
+  await page.unroute('**/api/**');
+  await page.getByRole('button', { name: 'Retry connection' }).click();
+  await expect(page.getByText('Live inference', { exact: true })).toBeVisible();
+  await page.getByLabel('Tenure (months)').fill('12');
+  await page.getByLabel('Monthly charges ($)').fill('89.50');
+  await page.getByLabel('Total charges ($)').fill('1074');
+  await page.route('**/api/predict', (route) => route.fulfill({ status: 503, contentType: 'application/json', body: '{"detail":"Unavailable"}' }));
+  await page.getByRole('button', { name: 'Analyze churn risk', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('unavailable');
+  await expect(page.locator('.score-ring')).toHaveCount(0);
+});
+
+test('mobile navigation and layout stay usable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.getByText('Live inference', { exact: true })).toBeVisible();
+  await page.screenshot({ path: 'reports/overview-mobile.png', fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+  await page.getByRole('button', { name: 'Predictions', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Analyze a customer', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+});

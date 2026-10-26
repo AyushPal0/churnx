@@ -1,0 +1,337 @@
+{
+  "model_name": "GradientBoostingClassifier",
+  "version": "churnx-v1.0.0",
+  "task": "binary_classification",
+  "training_date": "2026-10-26T17:58:40.009184+00:00",
+  "dataset": "IBM Telco Customer Churn",
+  "dataset_url": "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv",
+  "dataset_sha256": "16320c9c1ec72448db59aa0a26a0b95401046bef5d02fd3aeb906448e3055e91",
+  "records": 7043,
+  "features": [
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "tenure",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "MonthlyCharges",
+    "TotalCharges"
+  ],
+  "threshold": 0.35,
+  "risk_bands": {
+    "low": 0.3,
+    "high": 0.6
+  },
+  "metrics": {
+    "accuracy": 0.7785663591199432,
+    "precision": 0.5648535564853556,
+    "recall": 0.7219251336898396,
+    "f1": 0.6338028169014085,
+    "roc_auc": 0.8439794363068021,
+    "pr_auc": 0.662629494538122,
+    "brier_score": 0.1361473780174338,
+    "confusion_matrix": [
+      [
+        827,
+        208
+      ],
+      [
+        104,
+        270
+      ]
+    ]
+  },
+  "baseline_metrics": {
+    "accuracy": 0.7345635202271115,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.5,
+    "pr_auc": 0.2654364797728886,
+    "brier_score": 0.19497996008976815,
+    "confusion_matrix": [
+      [
+        1035,
+        0
+      ],
+      [
+        374,
+        0
+      ]
+    ]
+  },
+  "validation_metrics": {
+    "threshold": 0.35,
+    "accuracy": 0.7994676131322094,
+    "precision": 0.6022408963585434,
+    "recall": 0.7190635451505016,
+    "f1": 0.6554878048780488,
+    "roc_auc": 0.8507262533727562,
+    "pr_auc": 0.6713196022596309,
+    "brier_score": 0.13291405689450836,
+    "confusion_matrix": [
+      [
+        686,
+        142
+      ],
+      [
+        84,
+        215
+      ]
+    ]
+  },
+  "comparison": [
+    {
+      "model": "DummyClassifier",
+      "roc_auc": 0.5,
+      "pr_auc": 0.26536491850641436,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "model": "LogisticRegression",
+      "roc_auc": 0.8432880717856361,
+      "pr_auc": 0.6569103472053802,
+      "recall": 0.8018619246861926,
+      "f1": 0.6274481343239365
+    },
+    {
+      "model": "DecisionTreeClassifier",
+      "roc_auc": 0.8196489206178992,
+      "pr_auc": 0.5958935298863131,
+      "recall": 0.7868200836820083,
+      "f1": 0.6122054435824186
+    },
+    {
+      "model": "RandomForestClassifier",
+      "roc_auc": 0.8445378258575091,
+      "pr_auc": 0.661030228671657,
+      "recall": 0.7600767085076707,
+      "f1": 0.6334353254741034
+    },
+    {
+      "model": "GradientBoostingClassifier",
+      "roc_auc": 0.847500197798284,
+      "pr_auc": 0.6688220579634909,
+      "recall": 0.5142747559274756,
+      "f1": 0.5790980361898488
+    }
+  ],
+  "feature_importance": [
+    {
+      "label": "Contract",
+      "value": 0.06941
+    },
+    {
+      "label": "tenure",
+      "value": 0.04784
+    },
+    {
+      "label": "InternetService",
+      "value": 0.01628
+    },
+    {
+      "label": "OnlineSecurity",
+      "value": 0.00873
+    },
+    {
+      "label": "MonthlyCharges",
+      "value": 0.00863
+    },
+    {
+      "label": "TotalCharges",
+      "value": 0.00724
+    },
+    {
+      "label": "PaymentMethod",
+      "value": 0.00604
+    },
+    {
+      "label": "TechSupport",
+      "value": 0.00559
+    },
+    {
+      "label": "PaperlessBilling",
+      "value": 0.00382
+    },
+    {
+      "label": "SeniorCitizen",
+      "value": 0.00126
+    },
+    {
+      "label": "OnlineBackup",
+      "value": 0.00123
+    },
+    {
+      "label": "Dependents",
+      "value": 0.00113
+    },
+    {
+      "label": "StreamingTV",
+      "value": 0.00103
+    },
+    {
+      "label": "StreamingMovies",
+      "value": 0.00097
+    },
+    {
+      "label": "MultipleLines",
+      "value": 0.00073
+    },
+    {
+      "label": "gender",
+      "value": 0
+    },
+    {
+      "label": "Partner",
+      "value": 0
+    },
+    {
+      "label": "PhoneService",
+      "value": 0
+    },
+    {
+      "label": "DeviceProtection",
+      "value": 0
+    }
+  ],
+  "split": {
+    "train": 4507,
+    "validation": 1127,
+    "test": 1409,
+    "seed": 42,
+    "cv_folds": 5
+  },
+  "fairness": {
+    "gender": {
+      "Female": {
+        "records": 687,
+        "accuracy": 0.7729257641921398,
+        "precision": 0.5767634854771784,
+        "recall": 0.7202072538860104,
+        "f1": 0.6405529953917051,
+        "roc_auc": 0.8425562711082208,
+        "pr_auc": 0.6784970046044401,
+        "brier_score": 0.14049576074575484,
+        "confusion_matrix": [
+          [
+            392,
+            102
+          ],
+          [
+            54,
+            139
+          ]
+        ]
+      },
+      "Male": {
+        "records": 722,
+        "accuracy": 0.7839335180055401,
+        "precision": 0.5527426160337553,
+        "recall": 0.7237569060773481,
+        "f1": 0.6267942583732058,
+        "roc_auc": 0.8463302049611421,
+        "pr_auc": 0.6508295974935626,
+        "brier_score": 0.1320097894656934,
+        "confusion_matrix": [
+          [
+            435,
+            106
+          ],
+          [
+            50,
+            131
+          ]
+        ]
+      }
+    },
+    "SeniorCitizen": {
+      "0": {
+        "records": 1187,
+        "accuracy": 0.7927548441449032,
+        "precision": 0.5431034482758621,
+        "recall": 0.6847826086956522,
+        "f1": 0.6057692307692307,
+        "roc_auc": 0.8462113619370335,
+        "pr_auc": 0.6399456217597221,
+        "brier_score": 0.1259636667533717,
+        "confusion_matrix": [
+          [
+            752,
+            159
+          ],
+          [
+            87,
+            189
+          ]
+        ]
+      },
+      "1": {
+        "records": 222,
+        "accuracy": 0.7027027027027027,
+        "precision": 0.6230769230769231,
+        "recall": 0.826530612244898,
+        "f1": 0.7105263157894737,
+        "roc_auc": 0.7787195523370639,
+        "pr_auc": 0.7211693346166661,
+        "brier_score": 0.19059812247888291,
+        "confusion_matrix": [
+          [
+            75,
+            49
+          ],
+          [
+            17,
+            81
+          ]
+        ]
+      }
+    }
+  },
+  "sklearn_version": "1.8.0",
+  "tuning": {
+    "best_params": {
+      "classifier__learning_rate": 0.07,
+      "classifier__n_estimators": 120
+    },
+    "cv_roc_auc": 0.847500197798284,
+    "candidates": 4
+  },
+  "reference_profile": {
+    "gender": "Male",
+    "SeniorCitizen": 0,
+    "Partner": "No",
+    "Dependents": "No",
+    "tenure": 29.0,
+    "PhoneService": "Yes",
+    "MultipleLines": "No",
+    "InternetService": "Fiber optic",
+    "OnlineSecurity": "No",
+    "OnlineBackup": "No",
+    "DeviceProtection": "No",
+    "TechSupport": "No",
+    "StreamingTV": "No",
+    "StreamingMovies": "No",
+    "Contract": "Month-to-month",
+    "PaperlessBilling": "Yes",
+    "PaymentMethod": "Electronic check",
+    "MonthlyCharges": 70.35,
+    "TotalCharges": 1380.4
+  },
+  "performance_gates": {
+    "roc_auc": true,
+    "recall": true,
+    "f1": true
+  }
+}

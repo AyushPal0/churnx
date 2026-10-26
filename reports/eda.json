@@ -1,0 +1,153 @@
+{
+  "records": 7043,
+  "churn_rate": 0.2653698707936959,
+  "missing": {
+    "customerID": 0,
+    "gender": 0,
+    "SeniorCitizen": 0,
+    "Partner": 0,
+    "Dependents": 0,
+    "tenure": 0,
+    "PhoneService": 0,
+    "MultipleLines": 0,
+    "InternetService": 0,
+    "OnlineSecurity": 0,
+    "OnlineBackup": 0,
+    "DeviceProtection": 0,
+    "TechSupport": 0,
+    "StreamingTV": 0,
+    "StreamingMovies": 0,
+    "Contract": 0,
+    "PaperlessBilling": 0,
+    "PaymentMethod": 0,
+    "MonthlyCharges": 0,
+    "TotalCharges": 0,
+    "Churn": 0
+  },
+  "groups": {
+    "Contract": [
+      {
+        "label": "Month-to-month",
+        "value": 42.71,
+        "count": 3875
+      },
+      {
+        "label": "One year",
+        "value": 11.27,
+        "count": 1473
+      },
+      {
+        "label": "Two year",
+        "value": 2.83,
+        "count": 1695
+      }
+    ],
+    "InternetService": [
+      {
+        "label": "DSL",
+        "value": 18.96,
+        "count": 2421
+      },
+      {
+        "label": "Fiber optic",
+        "value": 41.89,
+        "count": 3096
+      },
+      {
+        "label": "No",
+        "value": 7.4,
+        "count": 1526
+      }
+    ],
+    "PaymentMethod": [
+      {
+        "label": "Bank transfer (automatic)",
+        "value": 16.71,
+        "count": 1544
+      },
+      {
+        "label": "Credit card (automatic)",
+        "value": 15.24,
+        "count": 1522
+      },
+      {
+        "label": "Electronic check",
+        "value": 45.29,
+        "count": 2365
+      },
+      {
+        "label": "Mailed check",
+        "value": 19.11,
+        "count": 1612
+      }
+    ],
+    "TechSupport": [
+      {
+        "label": "No",
+        "value": 41.64,
+        "count": 3473
+      },
+      {
+        "label": "No internet service",
+        "value": 7.4,
+        "count": 1526
+      },
+      {
+        "label": "Yes",
+        "value": 15.17,
+        "count": 2044
+      }
+    ],
+    "OnlineSecurity": [
+      {
+        "label": "No",
+        "value": 41.77,
+        "count": 3498
+      },
+      {
+        "label": "No internet service",
+        "value": 7.4,
+        "count": 1526
+      },
+      {
+        "label": "Yes",
+        "value": 14.61,
+        "count": 2019
+      }
+    ],
+    "PaperlessBilling": [
+      {
+        "label": "No",
+        "value": 16.33,
+        "count": 2872
+      },
+      {
+        "label": "Yes",
+        "value": 33.57,
+        "count": 4171
+      }
+    ],
+    "tenure": [
+      {
+        "label": "0\u201312 months",
+        "value": 47.44,
+        "count": 2186
+      },
+      {
+        "label": "13\u201324 months",
+        "value": 28.71,
+        "count": 1024
+      },
+      {
+        "label": "25\u201348 months",
+        "value": 20.39,
+        "count": 1594
+      },
+      {
+        "label": "49+ months",
+        "value": 9.51,
+        "count": 2239
+      }
+    ]
+  }
+}
